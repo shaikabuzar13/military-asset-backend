@@ -9,7 +9,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-            .allowedOrigins("http://military-asset-ui-system0402.netlify.app") // Allow your React frontend
+            .allowedOrigins("http://military-asset-management9901.netlify.app") // Allow your React frontend
             .allowedMethods("*")
             .allowedHeaders("*")
             .allowCredentials(true); // Important: allow sending cookies/Authorization
