@@ -1,15 +1,16 @@
-# Use OpenJDK image
+# -------------------- Build Stage --------------------
+FROM maven:3.9.6-eclipse-temurin-17 AS build
+WORKDIR /app
+COPY . .
+RUN mvn clean package -DskipTests
+
+# -------------------- Runtime Stage --------------------
 FROM openjdk:17-jdk-slim
-
-# Add a volume pointing to /tmp
 VOLUME /tmp
-
-# Set environment
 ENV JAVA_OPTS=""
 
-# Copy the jar file into the container
-ARG JAR_FILE=target/*.jar
-COPY ${JAR_FILE} app.jar
+# Copy the JAR built in the previous stage
+COPY --from=build /app/target/*.jar app.jar
 
-# Run the jar file
+# Run the JAR
 ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -jar app.jar"]
